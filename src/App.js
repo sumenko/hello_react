@@ -1,11 +1,19 @@
-import React from 'react';
-import ClassCounter from './components/ClassCounter';
-
+import React, {useState} from 'react';
+import PostItem from './components/PostItem';
+import './styles/App.css';
 
 function App() {
+  const [posts, setPosts] = useState([
+    {id: 1, title: 'Javascript', body: 'Description 1'},
+    {id: 2, title: 'Python', body: 'Description 2'},
+    {id: 3, title: 'C++', body: 'Description 3'},
+    {id: 4, title: 'Rust', body: 'Description 4'},
+  ])
   return (
     <div className="App">
-      <ClassCounter/>
+        {/* <PostItem post={{id: 1, title: 'Javascript', body: 'Description'}}/> */}
+        {posts.map(post =>
+          <PostItem post={post} key={post.id}/>)}
     </div>
   );
 }
