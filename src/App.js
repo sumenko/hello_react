@@ -12,6 +12,7 @@ function App() {
   return (
     <div className="App">
         {/* <PostItem post={{id: 1, title: 'Javascript', body: 'Description'}}/> */}
+        <h1 style={{textAlign: 'center'}}>Список постов</h1>
         {posts.map(post =>
           <PostItem post={post} key={post.id}/>)}
     </div>
