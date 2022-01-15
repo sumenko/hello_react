@@ -11,15 +11,23 @@ function App() {
     {id: 3, title: 'C++', body: 'Description 3'},
     {id: 4, title: 'Rust', body: 'Description 4'},
   ])
-  let title = "Post list";
+  const [title, setTitle] = useState('dsf');
+  const addNewPost = (e) => {
+    e.preventDefault();
+    console.log(title);
+  }
   return (
     <div className="App">
       <form>
-          <MyInput placeholder="subject" type="text"/>
+          <MyInput
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder="subject" 
+            type="text"/>
           <MyInput placeholder="post text" type="text"/>
-          <MyButton>Create</MyButton>
+          <MyButton onClick={addNewPost}>Create</MyButton>
       </form>
-      <PostList posts={posts} title={title}/>
+      <PostList posts={posts} title="Список постов"/>
     </div>
   );
 }
