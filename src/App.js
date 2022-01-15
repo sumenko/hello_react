@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PostItem from './components/PostItem';
+import PostList from './components/PostList'
 import './styles/App.css';
 
 function App() {
@@ -9,12 +9,10 @@ function App() {
     {id: 3, title: 'C++', body: 'Description 3'},
     {id: 4, title: 'Rust', body: 'Description 4'},
   ])
+  let title = "Post list";
   return (
     <div className="App">
-        {/* <PostItem post={{id: 1, title: 'Javascript', body: 'Description'}}/> */}
-        <h1 style={{textAlign: 'center'}}>Список постов</h1>
-        {posts.map(post =>
-          <PostItem post={post} key={post.id}/>)}
+      <PostList posts={posts} title={title}/>
     </div>
   );
 }
