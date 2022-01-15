@@ -4,8 +4,6 @@ import App from './App';
 
 
 ReactDOM.render(
-    React.createElement('button', {
-      onClick: () => console.log('CLICK')
-    }, 'Нажми меня'),
+    <App/>,
   document.getElementById('root')
 );
