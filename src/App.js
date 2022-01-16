@@ -6,41 +6,27 @@ import classes from './components/UI/input/MyInput.module.css'
 import './styles/App.css';
 
 function App() {
-  const [posts, setPosts] = useState([
-    {id: 1, title: 'Javascript', body: 'Description 1'},
-    {id: 2, title: 'Python', body: 'Description 2'},
-    {id: 3, title: 'C++', body: 'Description 3'},
-    {id: 4, title: 'Rust', body: 'Description 4'},
-  ])
-  const [title, setTitle] = useState('')
-  // const bodyInputRef = useRef();
-  const [body, setBody] = useState('')
+  const [posts, setPosts] = useState([])
+  const [post, setPost] = useState({title: '', body: ''})
   const addNewPost = (e) => {
-    // console.log('title: ' + title);
-    // console.log('post: ' + bodyInputRef.current.value);
     e.preventDefault();
-    const newPost = {
-      id: Date.now(),
-      title,
-      body
-    }
-    setPosts([...posts, newPost])
-    console.log(newPost)
+    setPosts([...posts, {...post, id: Date.now()}])
+    setPost({title: '', body: ''})
   }
   return (
     <div className="App">
       <form>
           {/* Управляемый компонент */}
           <MyInput
-            value={title}
-            onChange={e => setTitle(e.target.value)}
+            value={post.title}
+            onChange={e => setPost({...post, title: e.target.value})}
             placeholder="subject" 
             type="text"/>
 
           {/* Неуправляемый неконтроллируемый компонент */}
           <MyInput                                  
-            value={body}
-            onChange={e => setBody(e.target.value)}
+            value={post.body}
+            onChange={e => setPost({...post, body: e.target.value})}
             placeholder="post text" 
             type="text"/>
           <MyButton onClick={addNewPost}>Create</MyButton>
