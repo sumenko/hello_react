@@ -12,28 +12,37 @@ function App() {
     {id: 3, title: 'C++', body: 'Description 3'},
     {id: 4, title: 'Rust', body: 'Description 4'},
   ])
-  const [title, setTitle] = useState('');
-  const bodyInputRef = useRef();
+  const [title, setTitle] = useState('')
+  // const bodyInputRef = useRef();
+  const [body, setBody] = useState('')
   const addNewPost = (e) => {
+    // console.log('title: ' + title);
+    // console.log('post: ' + bodyInputRef.current.value);
     e.preventDefault();
-    console.log('title: ' + title);
-    console.log('post: ' + bodyInputRef.current.value);
+    const newPost = {
+      id: Date.now(),
+      title,
+      body
+    }
+    setPosts([...posts, newPost])
+    console.log(newPost)
   }
   return (
     <div className="App">
       <form>
+          {/* Управляемый компонент */}
           <MyInput
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="subject" 
             type="text"/>
-          <input 
-            ref={bodyInputRef} 
-            className={classes.myInput}
-            placeholder='текс поста'
-            type='text'/>
 
-          {/* <MyInput placeholder="post text" type="text"/> */}
+          {/* Неуправляемый неконтроллируемый компонент */}
+          <MyInput                                  
+            value={body}
+            onChange={e => setBody(e.target.value)}
+            placeholder="post text" 
+            type="text"/>
           <MyButton onClick={addNewPost}>Create</MyButton>
       </form>
       <PostList posts={posts} title="Список постов"/>
