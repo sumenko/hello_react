@@ -10,7 +10,7 @@ function App() {
   const [posts, setPosts] = useState([
     {title: 'О котиках', body: 'Котики бывают разные', id: 1},
     {title: 'О песиках', body: 'Пёсики тоже бывают разные', id: 2},
-    {title: 'О птичках', body: 'Птички тоже бывают разные', id: 3},
+    {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
   ])
   const [selectedSort, setSelectedSort] = useState('')
   
@@ -21,7 +21,10 @@ function App() {
   const removePost = (post) =>{
     setPosts(posts.filter(p => p.id !== post.id))
   }
-
+  const sortItems = (sort) => {
+    setSelectedSort(sort)
+    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
+  }
   return (
     <div className="App">
       <PostForm create={createPost}/>
@@ -29,6 +32,7 @@ function App() {
       <div>
           <MySelect 
               defaultValue='Сортировать'
+              onChange={sortItems}
               options={[
                 {value: 'title', name: 'по названию'},
                 {value: 'body', name: 'по описанию'}
@@ -36,9 +40,9 @@ function App() {
             />
       </div>
       {posts.length !== 0
-        ?
+        ? 
         <PostList remove={removePost} posts={posts} title="Список постов"/>
-        : 
+        :
         <h1 style={{textAlign: 'center'}}>no posts</h1>
       }
       <div>
@@ -47,8 +51,7 @@ function App() {
               head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
               data={[
                 ['Битумная черепица "стандарт"', '8', '1.3', '9.6'],
-                ['Настил из ОСП-3', '20', '1.05', '21'],
-                
+                ['Настил из ОСП-3', '20', '1.05', '21'], 
               ]}/>
       </div>
     </div>
