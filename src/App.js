@@ -4,6 +4,7 @@ import PostForm from './components/PostForm';
 
 import './styles/App.css';
 import MySelect from './components/UI/select/MySelect';
+import TablePrint from './components/TablePrint';
 
 function App() {
   const [posts, setPosts] = useState([
@@ -40,6 +41,16 @@ function App() {
         : 
         <h1 style={{textAlign: 'center'}}>no posts</h1>
       }
+      <div>
+          <br/>
+          <TablePrint 
+              head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
+              data={[
+                ['Битумная черепица "стандарт"', '8', '1.3', '9.6'],
+                ['Настил из ОСП-3', '20', '1.05', '21'],
+                
+              ]}/>
+      </div>
     </div>
   );
 }
