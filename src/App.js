@@ -3,9 +3,8 @@ import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 
 import './styles/App.css';
-import MySelect from './components/UI/select/MySelect';
 import TablePrint from './components/TablePrint';
-import MyInput from './components/UI/input/MyInput';
+import PostFilter from './components/PostFilter';
 
 function App() {
   // entry point
@@ -15,12 +14,12 @@ function App() {
     {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
   ])
 
-  const [selectedSort, setSelectedSort] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState({sort: '', query: ''})
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
+  
   
   const sortedPosts = useMemo( () => {
     if(selectedSort){
@@ -32,34 +31,13 @@ function App() {
   const sortedAndSearchedPosts = useMemo(() => {
         return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
       }, [searchQuery, sortedPosts]) 
-
-  const sortPosts = (sort) => {
-    setSelectedSort(sort)
-  }
  
 
   return (
     <div className="App">
+      <PostFilter filter={filter} setFilter={setFilter} />
       <PostForm create={createPost}/>
-      <MyInput
-          value={searchQuery}
-          placeholder='поиск поста'
-          onChange={(e) => setSearchQuery(e.target.value)}
-      />
-        
-      <hr style={{margin: '15px 0px'}}/>
-      <div>
-          <MySelect 
-              value={selectedSort}
-              defaultValue='Сортировать'
-              onChange={sortPosts}
-              options={[
-                {value: 'title', name: 'по названию'},
-                {value: 'body', name: 'по описанию'},
-              ]}
-            />
-      </div>
-      {sortedAndSearchedPosts.length !== 0
+    {sortedAndSearchedPosts.length !== 0
         ? 
         <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
         :
