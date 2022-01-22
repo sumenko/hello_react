@@ -5,6 +5,8 @@ import PostForm from './components/PostForm';
 import './styles/App.css';
 import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
+import MyModal from './components/UI/MyModal/MyModal';
+import MyButton from './components/UI/button/MyButton';
 
 function App() {
   // entry point
@@ -15,9 +17,10 @@ function App() {
   ])
   //       состояние     функция изменяющая состояние   инициализация
   const [filter, setFilter] = useState({sort: '', query: ''})
-
+  const [modal, setModal] = useState(false)
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
   
@@ -36,8 +39,11 @@ function App() {
 
   return (
     <div className="App">
+      <MyButton style= {{marginTop: 30}} onClick={() => setModal(true)}>Создать</MyButton>
       <PostFilter filter={filter} setFilter={setFilter} />
-      <PostForm create={createPost}/>
+      <MyModal visible={modal} setVisible={setModal}>
+          <PostForm create={createPost}/>
+      </MyModal>
       <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
 
       <div>
