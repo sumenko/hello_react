@@ -1,48 +1,51 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
 
 import './styles/App.css';
-import MySelect from './components/UI/select/MySelect';
 import TablePrint from './components/TablePrint';
+import PostFilter from './components/PostFilter';
 
 function App() {
+  // entry point
   const [posts, setPosts] = useState([
     {title: 'О котиках', body: 'Котики бывают разные', id: 1},
     {title: 'О песиках', body: 'Пёсики тоже бывают разные', id: 2},
     {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
   ])
+<<<<<<< HEAD
   //       состояние     функция изменяющая состояние   инициализация
   const [selectedSort, setSelectedSort] = useState('')
   
+=======
+
+  const [filter, setFilter] = useState({sort: '', query: ''})
+>>>>>>> 263bdbcfcad12429d6ad505bd22a6305ccd98d50
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
+  const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
+  
+  
+  const sortedPosts = useMemo( () => {
+    if(selectedSort){
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+    }
+    return posts;
+  }, [posts, selectedSort])
+  
+  const sortedAndSearchedPosts = useMemo(() => {
+        return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
+      }, [searchQuery, sortedPosts]) 
+ 
 
-  const removePost = (post) =>{
-    setPosts(posts.filter(p => p.id !== post.id))
-  }
-  const sortItems = (sort) => {
-    setSelectedSort(sort)
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
-  }
   return (
     <div className="App">
+      <PostFilter filter={filter} setFilter={setFilter} />
       <PostForm create={createPost}/>
-      <hr style={{margin: '15px'}}/>
-      <div>
-          <MySelect 
-              defaultValue='Сортировать'
-              onChange={sortItems}
-              options={[
-                {value: 'title', name: 'по названию'},
-                {value: 'body', name: 'по описанию'}
-              ]}
-            />
-      </div>
-      {posts.length !== 0
+    {sortedAndSearchedPosts.length !== 0
         ? 
-        <PostList remove={removePost} posts={posts} title="Список постов"/>
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
         :
         <h1 style={{textAlign: 'center'}}>no posts</h1>
       }
