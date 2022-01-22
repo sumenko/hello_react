@@ -4,11 +4,12 @@ import MySelect from './UI/select/MySelect';
 
 
 const PostFilter = ({filter, setFilter}) => {
+    return (
     <div>
             <MyInput
                 value={filter.query}
                 placeholder='поиск поста'
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => setFilter({...filter, query: e.target.value})}
             />
             
             <hr style={{margin: '15px 0px'}}/>
@@ -24,6 +25,7 @@ const PostFilter = ({filter, setFilter}) => {
                 />
             </div>
     </div>
+    )
 
 }
 

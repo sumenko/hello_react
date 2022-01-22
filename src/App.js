@@ -9,18 +9,13 @@ import PostFilter from './components/PostFilter';
 function App() {
   // entry point
   const [posts, setPosts] = useState([
-    {title: 'О котиках', body: 'Котики бывают разные', id: 1},
-    {title: 'О песиках', body: 'Пёсики тоже бывают разные', id: 2},
-    {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
+    {title: '1О котиках', body: '3Котики бывают разные', id: 1},
+    {title: '2О песиках', body: '2Пёсики тоже бывают разные', id: 2},
+    {title: '3О змейках', body: '1Змейки тоже бывают разные', id: 3},
   ])
-<<<<<<< HEAD
   //       состояние     функция изменяющая состояние   инициализация
-  const [selectedSort, setSelectedSort] = useState('')
-  
-=======
-
   const [filter, setFilter] = useState({sort: '', query: ''})
->>>>>>> 263bdbcfcad12429d6ad505bd22a6305ccd98d50
+
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
@@ -28,15 +23,15 @@ function App() {
   
   
   const sortedPosts = useMemo( () => {
-    if(selectedSort){
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+    if(filter.sort){
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
     }
     return posts;
-  }, [posts, selectedSort])
+  }, [posts, filter.sort])
   
   const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
-      }, [searchQuery, sortedPosts]) 
+        return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query.toLocaleLowerCase()));
+      }, [filter.query, sortedPosts]) 
  
 
   return (
