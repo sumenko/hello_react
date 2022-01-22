@@ -38,12 +38,8 @@ function App() {
     <div className="App">
       <PostFilter filter={filter} setFilter={setFilter} />
       <PostForm create={createPost}/>
-    {sortedAndSearchedPosts.length !== 0
-        ? 
-        <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
-        :
-        <h1 style={{textAlign: 'center'}}>no posts</h1>
-      }
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
+
       <div>
           <br/>
           <TablePrint 
