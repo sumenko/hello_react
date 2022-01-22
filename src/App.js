@@ -12,6 +12,7 @@ function App() {
     {title: 'О песиках', body: 'Пёсики тоже бывают разные', id: 2},
     {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
   ])
+  //       состояние     функция изменяющая состояние   инициализация
   const [selectedSort, setSelectedSort] = useState('')
   
   const createPost = (newPost) => {
