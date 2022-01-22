@@ -5,43 +5,63 @@ import PostForm from './components/PostForm';
 import './styles/App.css';
 import MySelect from './components/UI/select/MySelect';
 import TablePrint from './components/TablePrint';
+import MyInput from './components/UI/input/MyInput';
 
 function App() {
+  // entry point
   const [posts, setPosts] = useState([
     {title: 'О котиках', body: 'Котики бывают разные', id: 1},
     {title: 'О песиках', body: 'Пёсики тоже бывают разные', id: 2},
     {title: 'О змейках', body: 'Змейки тоже бывают разные', id: 3},
   ])
+
   const [selectedSort, setSelectedSort] = useState('')
-  
+  const [searchQuery, setSearchQuery] = useState('')
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
 
-  const removePost = (post) =>{
-    setPosts(posts.filter(p => p.id !== post.id))
+  const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
+  
+  function getSortedPosts(){
+    console.log('СОРТИРОВКА') 
+    if(selectedSort){
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+      
+    }
+    return posts;
   }
-  const sortItems = (sort) => {
+
+  const sortedPosts = getSortedPosts()
+  const sortPosts = (sort) => {
     setSelectedSort(sort)
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
   }
+ 
+
   return (
     <div className="App">
       <PostForm create={createPost}/>
-      <hr style={{margin: '15px'}}/>
+      <MyInput
+          value={searchQuery}
+          placeholder='поиск поста'
+          onChange={(e) => setSearchQuery(e.target.value)}
+      />
+        
+      <hr style={{margin: '15px 0px'}}/>
       <div>
           <MySelect 
+              value={selectedSort}
               defaultValue='Сортировать'
-              onChange={sortItems}
+              onChange={sortPosts}
               options={[
                 {value: 'title', name: 'по названию'},
-                {value: 'body', name: 'по описанию'}
+                {value: 'body', name: 'по описанию'},
               ]}
             />
       </div>
       {posts.length !== 0
         ? 
-        <PostList remove={removePost} posts={posts} title="Список постов"/>
+        <PostList remove={removePost} posts={sortedPosts} title="Список постов"/>
         :
         <h1 style={{textAlign: 'center'}}>no posts</h1>
       }
