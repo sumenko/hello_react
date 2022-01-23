@@ -22,15 +22,15 @@ function App() {
   
   
   const sortedPosts = useMemo( () => {
-    if(selectedSort){
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+    if(filter.sort){
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
     }
     return posts;
-  }, [posts, selectedSort])
+  }, [posts, filter.sort])
   
   const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
-      }, [searchQuery, sortedPosts]) 
+        return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query.toLocaleLowerCase()));
+      }, [filter.query, sortedPosts]) 
  
 
   return (
