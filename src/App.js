@@ -7,6 +7,7 @@ import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/MyModal/MyModal';
 import MyButton from './components/UI/button/MyButton';
+import axios from 'axios';
 
 function App() {
   // entry point
@@ -22,6 +23,13 @@ function App() {
     setPosts([...posts, newPost])
     setModal(false)
   }
+
+  async function fetchPosts() {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    setPosts(response.data);
+    // console.log(response)
+  }
+
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
   
   
@@ -41,6 +49,7 @@ function App() {
     <div className="App">
       <MyButton style= {{marginTop: 30}} onClick={() => setModal(true)}>Создать</MyButton>
       <PostFilter filter={filter} setFilter={setFilter} />
+      <MyButton style={{marginTop: 15}} onClick={fetchPosts}>Fetch posts</MyButton>
       <MyModal visible={modal} setVisible={setModal}>
           <PostForm create={createPost}/>
       </MyModal>

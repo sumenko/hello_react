@@ -5,6 +5,7 @@ const PostItem = (props, {removePost}) => {
     return (
         <div className="post">
             <div className="post__content">
+                UserId: {props.post.userId}<br />
                 <strong>{props.number}. {props.post.title}</strong>
                 <div>
                     {props.post.body}
