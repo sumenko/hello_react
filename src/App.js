@@ -7,6 +7,7 @@ import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/MyModal/MyModal';
 import MyButton from './components/UI/button/MyButton';
+import { TransitionGroup } from 'react-transition-group';
 
 function App() {
   // entry point
@@ -41,7 +42,9 @@ function App() {
       <MyButton style={{marginTop:30}} onClick={() => setModal(true)}>Create post</MyButton>
       <PostFilter filter={filter} setFilter={setFilter} />
       <MyModal visible={modal} setVisible={setModal}>
-          <PostForm create={createPost}/>
+      
+      <PostForm create={createPost}/>
+      
       {/* <TablePrint 
           head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
           data={[
