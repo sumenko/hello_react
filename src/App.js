@@ -32,7 +32,6 @@ function App() {
 
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
   
-  
   const sortedPosts = useMemo( () => {
     if(filter.sort){
       return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
@@ -57,12 +56,6 @@ function App() {
 
       <div>
           <br/>
-          <TablePrint 
-              head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
-              data={[
-                ['Битумная черепица "стандарт"', '8', '1.3', '9.6'],
-                ['Настил из ОСП-3', '20', '1.05', '21'], 
-              ]}/>
       </div>
     </div>
   );
