@@ -5,6 +5,7 @@ import PostForm from './components/PostForm';
 import './styles/App.css';
 import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
+import MyModal from './components/UI/MyModal/MyModal';
 
 function App() {
   // entry point
@@ -35,22 +36,26 @@ function App() {
 
   return (
     <div className="App">
+      
       <PostFilter filter={filter} setFilter={setFilter} />
-      <PostForm create={createPost}/>
-    {sortedAndSearchedPosts.length !== 0
-        ? 
-        <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
-        :
-        <h1 style={{textAlign: 'center'}}>no posts</h1>
-      }
-      <div>
+      <MyModal>
+          <PostForm create={createPost}/>
+      {/* <TablePrint 
+          head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
+          data={[
+            ['Битумная черепица "стандарт"', '8', '1.3', '9.6'],
+            ['Настил из ОСП-3', '20', '1.05', '21'], 
+          ]}/> */}
+      </MyModal>
+            {sortedAndSearchedPosts.length !== 0
+                ? 
+                <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов"/>
+                :
+                <h1 style={{textAlign: 'center'}}>no posts</h1>
+              }
+              <div>
+      
           <br/>
-          <TablePrint 
-              head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
-              data={[
-                ['Битумная черепица "стандарт"', '8', '1.3', '9.6'],
-                ['Настил из ОСП-3', '20', '1.05', '21'], 
-              ]}/>
       </div>
     </div>
   );
