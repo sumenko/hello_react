@@ -6,6 +6,7 @@ import './styles/App.css';
 import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/MyModal/MyModal';
+import MyButton from './components/UI/button/MyButton';
 
 function App() {
   // entry point
@@ -16,11 +17,12 @@ function App() {
   ])
 
   const [filter, setFilter] = useState({sort: '', query: ''})
+  const [modal, setModal] = useState(false);
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false);
   }
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
-  
   
   const sortedPosts = useMemo( () => {
     if(filter.sort){
@@ -36,9 +38,9 @@ function App() {
 
   return (
     <div className="App">
-      
+      <MyButton style={{marginTop:30}} onClick={() => setModal(true)}>Create post</MyButton>
       <PostFilter filter={filter} setFilter={setFilter} />
-      <MyModal>
+      <MyModal visible={modal} setVisible={setModal}>
           <PostForm create={createPost}/>
       {/* <TablePrint 
           head={['Наименование', <div>q<sub>нор</sub></div>, <div>&gamma;<sub>f</sub></div>, <div>q<sub>расч</sub></div>]}
