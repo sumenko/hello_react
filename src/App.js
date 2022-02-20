@@ -1,48 +1,39 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import PostList from './components/PostList';
 import PostForm from './components/PostForm';
-
+import { usePosts } from './hooks/usePosts';
 import './styles/App.css';
 import TablePrint from './components/TablePrint';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/MyModal/MyModal';
 import MyButton from './components/UI/button/MyButton';
 import axios from 'axios';
+import PostService from './API/PostService';
 
 function App() {
   // entry point
-  const [posts, setPosts] = useState([
-    {title: '1О котиках', body: '3Котики бывают разные', id: 1},
-    {title: '2О песиках', body: '2Пёсики тоже бывают разные', id: 2},
-    {title: '3О змейках', body: '1Змейки тоже бывают разные', id: 3},
-  ])
+  const [posts, setPosts] = useState([ ])
   //       состояние     функция изменяющая состояние   инициализация
   const [filter, setFilter] = useState({sort: '', query: ''})
   const [modal, setModal] = useState(false)
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
+  
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+  
+  
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
     setModal(false)
   }
 
   async function fetchPosts() {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    setPosts(response.data);
-    // console.log(response)
+    const posts = await PostService.getAll();
+    setPosts(posts);
   }
 
   const removePost = (post) =>{setPosts(posts.filter(p => p.id !== post.id))}
-  
-  const sortedPosts = useMemo( () => {
-    if(filter.sort){
-      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]));
-    }
-    return posts;
-  }, [posts, filter.sort])
-  
-  const sortedAndSearchedPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query.toLocaleLowerCase()));
-      }, [filter.query, sortedPosts]) 
- 
 
   return (
     <div className="App">
